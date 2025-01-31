@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolaX Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #data-container { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div id="data-container">Loading data...</div>
+    <script>
+        async function fetchData() {
+            const tokenId = '20250131174257661475066';
+            const sn = 'XM4A15K8243033';
+            const url = `https://global.solaxcloud.com/api/v2/dataAccess/realtimeInfo/get?tokenId=${20250131174257661475066}&sn=${XM4A15K8243033}`;
+
+            try {
+                const response = await fetch(url);
+                console.log('Response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log('Data:', data);
+                displayData(data);
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+        function displayData(data) {
+            const container = document.getElementById('data-container');
+            container.innerText = JSON.stringify(data, null, 2);
+        }
+
+        fetchData();
+        setInterval(fetchData, 60000); // Fetch data every 60 seconds
+    </script>
+</body>
+</html>
